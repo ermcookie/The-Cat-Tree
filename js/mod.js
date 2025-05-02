@@ -12,14 +12,14 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.1",
+	name: "meow :3",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+	<h3>v0.1</h3><br>
+		- Added 4 layers.<br>
+		- Added upgrades.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -46,6 +46,19 @@ function getPointGen() {
 	if (hasUpgrade("c",13)) gain = gain.times(player.points).add(1).pow(0.4)	
 	if (hasUpgrade("c",12))	gain = gain.times(4)
     if (hasUpgrade("a",12)) gain = gain.pow(0.4)
+	if (hasUpgrade("cs",11)) gain = gain.times(player.points).add(1).pow(1.1)	
+	if (hasUpgrade("cs",12)) gain = gain.times(player.points).add(1).pow(1.2)
+	if (hasUpgrade("cs",13)) gain = gain.times(player.points).add(1).pow(1.3)
+	if (hasUpgrade("cs",14)) gain = gain.times(player.points).add(1).pow(1.4)
+	if (hasUpgrade("cs",21)) gain = gain.times(player.points).add(1).pow(1.6)
+	if (hasUpgrade("cs",22)) gain = gain.times(player.points).add(1).pow(1.7)
+	if (hasUpgrade("cs",23)) gain = gain.times(player.points).add(1).pow(1.8)
+	if (hasUpgrade("cs",24)) gain = gain.times(player.points).add(1).pow(1.9)
+	if (hasUpgrade("cs",31)) gain = gain.times(player.points).add(1).pow(2)
+	if (hasUpgrade("cs",32)) gain = gain.times(player.points).add(1).pow(2.1)
+	if (hasUpgrade("cs",33)) gain = gain.times(player.points).add(1).pow(2.2)
+	if (hasUpgrade("cs",34)) gain = gain.times(player.points).add(1).pow(2.3)
+
 	return gain
 }
 
