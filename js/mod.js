@@ -1,11 +1,11 @@
 let modInfo = {
-	name: "The ??? Tree",
-	author: "nobody",
-	pointsName: "points",
+	name: "The Cat Tree",
+	author: "ermcookie",
+	pointsName: "fish",
 	modFiles: ["layers.js", "tree.js"],
 
-	discordName: "",
-	discordLink: "",
+	discordName: "ermcookie's stuff",
+	discordLink: "https://discord.gg/PNuyTFGpzv",
 	initialStartPoints: new Decimal (10), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
@@ -42,6 +42,10 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+	if (hasUpgrade("c",11)) gain = gain.times(2)
+	if (hasUpgrade("c",13)) gain = gain.times(player.points).add(1).pow(0.4)	
+	if (hasUpgrade("c",12))	gain = gain.times(4)
+    if (hasUpgrade("a",12)) gain = gain.pow(0.4)
 	return gain
 }
 
