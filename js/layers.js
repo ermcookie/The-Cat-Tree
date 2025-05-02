@@ -127,6 +127,7 @@ addLayer("a", {
         {key: "a", description: "A: Reset for Ascended tuna", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return true},
+    autoPrestige(){return hasUpgrade("cs",11)},
     upgrades:{
         11:{
             title:"midas cat",
