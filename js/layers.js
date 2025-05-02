@@ -15,8 +15,8 @@ addLayer("c", {
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
-        if (hasUpgrade("p",11)) mult = mult.times(2)
-        if (hasUpgrade("p",11)) mult = mult.add(player["c"].points).pow(0.3)
+        if (hasUpgrade("p",12)) mult = mult.times(2)
+        if (hasUpgrade("p",13)) mult = mult.add(player["c"].points).pow(0.3)
     
         return mult
     },
@@ -29,7 +29,7 @@ addLayer("c", {
     ],
     layerShown(){return true},
     branches:["c","p"],
-    autoPrestige(){return hasUpgrade("p",13)},
+    autoPrestige(){return hasUpgrade("p",11)},
     upgrades:{
         11:{
             title:"cat food",
@@ -67,7 +67,7 @@ addLayer("p", {
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
-        if (hasUpgrade("a",11)) mult = mult.times(player["c"].points).div(100)
+        if (hasUpgrade("a",13)) mult = mult.times(player["c"].points).div(100)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -79,7 +79,7 @@ addLayer("p", {
     ],
     layerShown(){return true},
     branches:["p","a"],
-    autoPrestige(){return hasUpgrade("a",13)},
+    autoPrestige(){return hasUpgrade("a",11)},
     upgrades:{
         11:{
             title:"premium cat food",
