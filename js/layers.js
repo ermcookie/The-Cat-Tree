@@ -17,7 +17,14 @@ addLayer("c", {
         mult = new Decimal(1)
         if (hasUpgrade("p",12)) mult = mult.times(2)
         if (hasUpgrade("p",13)) mult = mult.add(player["c"].points).pow(0.3)
-    
+        if(hasUpgrade("pl",11)) mult = mult.times(1.5)
+        if(hasUpgrade("pl",12)) mult = mult.times(2)
+        if(hasUpgrade("pl",13)) mult = mult.times(2.5)
+        if(hasUpgrade("pl",14)) mult = mult.times(3)
+        if(hasUpgrade("pl",21)) mult = mult.times(3.5)
+        if(hasUpgrade("pl",22)) mult = mult.times(4)
+        if(hasUpgrade("pl",23)) mult = mult.times(4.5)
+        if(hasUpgrade("pl",24)) mult = mult.times(5)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -47,7 +54,7 @@ addLayer("c", {
             description:"stonks",
             cost:new Decimal(25),
             unlocked(){return hasUpgrade("c",12)}
-        }
+        },
     }
 })
 addLayer("p", {
@@ -75,7 +82,7 @@ addLayer("p", {
     },
     row: 1, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
-        {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+        {key: "e", description: "E: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return true},
     branches:["p","a"],
@@ -117,6 +124,15 @@ addLayer("a", {
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if(hasUpgrade("pl",11)) mult = mult.times(1.5)
+        if(hasUpgrade("pl",12)) mult = mult.times(2)
+        if(hasUpgrade("pl",13)) mult = mult.times(2.5)
+        if(hasUpgrade("pl",14)) mult = mult.times(3)
+        if(hasUpgrade("pl",21)) mult = mult.times(3.5)
+        if(hasUpgrade("pl",22)) mult = mult.times(4)
+        if(hasUpgrade("pl",23)) mult = mult.times(4.5)
+        if(hasUpgrade("pl",24)) mult = mult.times(5)
+    
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -128,6 +144,7 @@ addLayer("a", {
     ],
     layerShown(){return true},
     autoPrestige(){return hasUpgrade("cs",11)},
+    branches:["a","cs","pl"],
     upgrades:{
         11:{
             title:"midas cat",
@@ -223,6 +240,76 @@ addLayer("cs", {
         34:{
             title:"pisces",
             cost:new Decimal(12),
+        },
+    }
+})
+addLayer("pl", {
+    name: "planets", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "Pl", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "#00003B",
+    requires: new Decimal(10), // Can be a function that takes requirement increases into account
+    resource: "ascended tuna", // Name of prestige currency
+    baseResource: "prestige points", // Name of resource prestige is based on
+    baseAmount() {return player["p"].points}, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 3, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "p", description: "p: Reset for planets", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
+    layerShown(){return true},
+    upgrades:{
+        11:{
+            title:"mercury",
+            description:"lorem",
+            cost: new Decimal(1),
+        },
+        12:{
+            title:"venus",
+            description:"lorem",
+            cost: new Decimal(2),
+        },
+        13:{
+            title:"earth",
+            description:"lorem",
+            cost: new Decimal(3),
+        },
+        14:{
+            title:"mars",
+            description:"lorem",
+            cost: new Decimal(4),
+        },
+        21:{
+            title:"jupiter",
+            description:"lorem",
+            cost: new Decimal(5),
+        },
+        22:{
+            title:"saturn",
+            description:"lorem",
+            cost: new Decimal(6),
+        },
+        23:{
+            title:"uranus",
+            description:"lorem",
+            cost: new Decimal(7),
+        },
+        24:{
+            title:"neptune",
+            description:"lorem",
+            cost: new Decimal(8),
         },
     }
 })

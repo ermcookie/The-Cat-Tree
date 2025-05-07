@@ -12,13 +12,16 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1",
+	num: "0.2",
 	name: "meow :3",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.1</h3><br>
 		- Added 4 layers.<br>
+		- Added upgrades.
+	<h3>v0.1</h3><br>
+		- Added 1 layer.<br>
 		- Added upgrades.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
@@ -43,21 +46,21 @@ function getPointGen() {
 
 	let gain = new Decimal(1)
 	if (hasUpgrade("c",11)) gain = gain.times(2)
-	if (hasUpgrade("c",13)) gain = gain.add(player.points.pow(0.4))	
+	if (hasUpgrade("c",13)) gain = gain.add(player.points.pow(1.4))	
 	if (hasUpgrade("c",12))	gain = gain.times(4)
-    if (hasUpgrade("a",12)) gain = gain.pow(0.4)
-	if (hasUpgrade("cs",11)) gain = gain.add(player.points.pow(0.1))
-	if (hasUpgrade("cs",12)) gain = gain.add(player.points.pow(0.2))
-	if (hasUpgrade("cs",13)) gain = gain.add(player.points.pow(0.3))
-	if (hasUpgrade("cs",14)) gain = gain.add(player.points.pow(0.4))
-	if (hasUpgrade("cs",21)) gain = gain.add(player.points.pow(0.5))
-	if (hasUpgrade("cs",22)) gain = gain.add(player.points.pow(0.6))
-	if (hasUpgrade("cs",23)) gain = gain.add(player.points.pow(0.7))
-	if (hasUpgrade("cs",24)) gain = gain.add(player.points.pow(0.8))
-	if (hasUpgrade("cs",31)) gain = gain.add(player.points.pow(0.9))
-	if (hasUpgrade("cs",32)) gain = gain.add(player.points.pow(1))
-	if (hasUpgrade("cs",33)) gain = gain.add(player.points.pow(1.1))
-	if (hasUpgrade("cs",34)) gain = gain.add(player.points.pow(1.2))
+    if (hasUpgrade("a",12)) gain = gain.pow(1.4)
+	if (hasUpgrade("cs",11)) gain = gain.add(player.points.pow(2))
+	if (hasUpgrade("cs",12)) gain = gain.add(player.points.pow(2))
+	if (hasUpgrade("cs",13)) gain = gain.add(player.points.pow(2))
+	if (hasUpgrade("cs",14)) gain = gain.add(player.points.pow(2))
+	if (hasUpgrade("cs",21)) gain = gain.add(player.points.pow(2))
+	if (hasUpgrade("cs",22)) gain = gain.add(player.points.pow(2))
+	if (hasUpgrade("cs",23)) gain = gain.add(player.points.pow(2))
+	if (hasUpgrade("cs",24)) gain = gain.add(player.points.pow(2))
+	if (hasUpgrade("cs",31)) gain = gain.add(player.points.pow(2))
+	if (hasUpgrade("cs",32)) gain = gain.add(player.points.pow(2))
+	if (hasUpgrade("cs",33)) gain = gain.add(player.points.pow(2))
+	if (hasUpgrade("cs",34)) gain = gain.add(player.points.pow(2))
 
 	return gain
 }
