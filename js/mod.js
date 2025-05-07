@@ -1,5 +1,5 @@
 let modInfo = {
-	name: "The Cat Tree",
+	name: "ermcookie's Cat Tree",
 	author: "ermcookie",
 	pointsName: "fish",
 	modFiles: ["layers.js", "tree.js"],
@@ -46,9 +46,9 @@ function getPointGen() {
 
 	let gain = new Decimal(1)
 	if (hasUpgrade("c",11)) gain = gain.times(2)
-	if (hasUpgrade("c",13)) gain = gain.pow(1.4)
 	if (hasUpgrade("c",12))	gain = gain.times(4)
-    if (hasUpgrade("a",12)) gain = gain.pow(0.4)
+	if (hasUpgrade("c",13)) gain = gain.pow(1.4)
+	if (hasUpgrade("a",12)) gain = gain.pow(1.2)	
 	if (hasUpgrade("cs",11)) gain = gain.pow(1.5)
 	if (hasUpgrade("cs",12)) gain = gain.pow(1.5)
 	if (hasUpgrade("cs",13)) gain = gain.pow(1.5)
@@ -61,6 +61,7 @@ function getPointGen() {
 	if (hasUpgrade("cs",32)) gain = gain.pow(1.5)
 	if (hasUpgrade("cs",33)) gain = gain.pow(1.5)
 	if (hasUpgrade("cs",34)) gain = gain.pow(1.5)
+		
 
 	return gain
 }

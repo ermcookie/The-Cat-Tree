@@ -16,7 +16,6 @@ addLayer("c", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if (hasUpgrade("p",12)) mult = mult.times(2)
-        if (hasUpgrade("p",13)) mult = mult.add(player["c"].points).pow(0.3)
         if(hasUpgrade("pl",11)) mult = mult.times(1.5)
         if(hasUpgrade("pl",12)) mult = mult.times(2)
         if(hasUpgrade("pl",13)) mult = mult.times(2.5)
@@ -25,6 +24,7 @@ addLayer("c", {
         if(hasUpgrade("pl",22)) mult = mult.times(4)
         if(hasUpgrade("pl",23)) mult = mult.times(4.5)
         if(hasUpgrade("pl",24)) mult = mult.times(5)
+        if (hasUpgrade("p",13) && player["c"].points.neq(0)) mult = mult.add(player["c"].points).pow(0.3)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -143,7 +143,6 @@ addLayer("a", {
         {key: "a", description: "A: Reset for Ascended tuna", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return true},
-    autoPrestige(){return hasUpgrade("cs",11)},
     branches:["a","cs","pl"],
     upgrades:{
         11:{
@@ -252,7 +251,7 @@ addLayer("pl", {
 		points: new Decimal(0),
     }},
     color: "#00003B",
-    requires: new Decimal(10), // Can be a function that takes requirement increases into account
+    requires: new Decimal(5), // Can be a function that takes requirement increases into account
     resource: "planets", // Name of prestige currency
     baseResource: "ascended tuna", // Name of resource prestige is based on
     baseAmount() {return player["a"].points}, // Get the current amount of baseResource
