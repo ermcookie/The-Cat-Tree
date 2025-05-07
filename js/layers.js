@@ -36,7 +36,7 @@ addLayer("c", {
     ],
     layerShown(){return true},
     branches:["c","p"],
-    autoPrestige(){return hasUpgrade("p",11)},
+    passiveGeneration(){return hasUpgrade("p",11)},
     upgrades:{
         11:{
             title:"cat food",
@@ -66,7 +66,7 @@ addLayer("p", {
 		points: new Decimal(0),
     }},
     color: "#7F9411",
-    requires: new Decimal(100), // Can be a function that takes requirement increases into account
+    requires: new Decimal(50), // Can be a function that takes requirement increases into account
     resource: "prestige points", // Name of prestige currency
     baseResource: "money", // Name of resource prestige is based on
     baseAmount() {return player["c"].points}, // Get the current amount of baseResource
@@ -86,7 +86,7 @@ addLayer("p", {
     ],
     layerShown(){return true},
     branches:["p","a"],
-    autoPrestige(){return hasUpgrade("a",11)},
+    passiveGeneration(){return hasUpgrade("a",11)},
     upgrades:{
         11:{
             title:"premium cat food",
@@ -253,9 +253,9 @@ addLayer("pl", {
     }},
     color: "#00003B",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
-    resource: "ascended tuna", // Name of prestige currency
-    baseResource: "prestige points", // Name of resource prestige is based on
-    baseAmount() {return player["p"].points}, // Get the current amount of baseResource
+    resource: "planets", // Name of prestige currency
+    baseResource: "ascended tuna", // Name of resource prestige is based on
+    baseAmount() {return player["a"].points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
