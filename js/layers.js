@@ -24,7 +24,7 @@ addLayer("c", {
         if(hasUpgrade("pl",22)) mult = mult.times(4)
         if(hasUpgrade("pl",23)) mult = mult.times(4.5)
         if(hasUpgrade("pl",24)) mult = mult.times(5)
-        if (hasUpgrade("p",13) && player["c"].points.neq(0)) mult = mult.add(player["c"].points).pow(0.3)
+        if (hasUpgrade("p",13) && player["c"].points.neq(0)) mult = mult.add(upgradeEffect("p",13))
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -40,18 +40,18 @@ addLayer("c", {
     upgrades:{
         11:{
             title:"cat food",
-            description:"buy cat food",
+            description:"buy cat food<br> x2 fish gain",
             cost: new Decimal(5)
         },
         12:{
             title:"cat toys",
-            description:"they love the boxes",
+            description:"they love the boxes<br> x4 fish gain",
             cost:new Decimal(10),
             unlocked(){return hasUpgrade("c",11)}
         },
         13:{
             title:"businesscats",
-            description:"stonks",
+            description:"stonks<br> ^1.4 fish gain",
             cost:new Decimal(25),
             unlocked(){return hasUpgrade("c",12)}
         },
@@ -90,12 +90,12 @@ addLayer("p", {
     upgrades:{
         11:{
             title:"premium cat food",
-            description:"fancy cat food",
+            description:"fancy cat food<br>passive money generation",
             cost: new Decimal(1)
         },
         12:{
             title:"fancy cat toys",
-            description:"they (still) love the boxes",
+            description:"they (still) love the boxes<br> x2 money gain",
             cost:new Decimal(2),
             unlocked(){return hasUpgrade("p",11)}
         },
@@ -103,7 +103,9 @@ addLayer("p", {
             title:"meow robots",
             description:"boop beep",
             cost:new Decimal(3),
-            unlocked(){return hasUpgrade("p",12)}
+            unlocked(){return hasUpgrade("p",12)},
+            effect(){return player["c"].points.pow(0.3)},
+            effectDisplay() { return format(this.effect())+"x moneys" }, // Add formatting to the effect
         }
     }
 })
@@ -191,6 +193,12 @@ addLayer("cs", {
         {key: "s", description: "S: Reset for stars", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return hasAchievement("ac",23)},
+    infoboxes: {
+        lore: {
+            title: "layer effect",
+            body() { return "each constellation gives you ^1.5 gain" },
+        },
+    },
     upgrades:{
         11:{
             title:"aries",
@@ -272,42 +280,42 @@ addLayer("pl", {
     upgrades:{
         11:{
             title:"mercury",
-            description:"lorem",
+            description:"x1.5 money gain",
             cost: new Decimal(1),
         },
         12:{
             title:"venus",
-            description:"lorem",
+            description:"x2 money gain",
             cost: new Decimal(2),
         },
         13:{
             title:"earth",
-            description:"lorem",
+            description:"x2.5 money gain",
             cost: new Decimal(3),
         },
         14:{
             title:"mars",
-            description:"lorem",
+            description:"x3 money gain",
             cost: new Decimal(4),
         },
         21:{
             title:"jupiter",
-            description:"lorem",
+            description:"x3.5 money gain",
             cost: new Decimal(5),
         },
         22:{
             title:"saturn",
-            description:"lorem",
+            description:"x4 money gain",
             cost: new Decimal(6),
         },
         23:{
             title:"uranus",
-            description:"lorem",
+            description:"x4.5 money gain",
             cost: new Decimal(7),
         },
         24:{
             title:"neptune",
-            description:"lorem",
+            description:"x5 money gain",
             cost: new Decimal(8),
         },
     }
@@ -323,7 +331,7 @@ addLayer("b", {
     baseResource: "fish",
     requires: new Decimal(1e100),
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 2, // Prestige currency exponent
+    exponent:2, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         return mult
@@ -342,7 +350,27 @@ addLayer("b", {
             effectDescription: "2x point gain",
             done() { return player[this.layer].points.gte(1) }
         }
-    }
+    },
+    doReset(){
+        layerDataReset("a")
+        layerDataReset("p")
+        layerDataReset("pl")
+        layerDataReset("c")
+        layerDataReset("cs")
+        /*
+          that giant if does 2 things
+          first it gets the resetting layer's row and makes sure
+          it's higher than the current layer's row
+      
+          second it gets the resetting layer's row again
+          and checks if it's a side layer
+          if either of those are true then it returns
+          nothing which ends the function
+      
+          the other line resets the layer
+        */
+      },
+      
 },
 )
 addLayer("ac", {
