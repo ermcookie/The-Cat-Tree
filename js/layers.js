@@ -339,11 +339,15 @@ addLayer("b", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
+
     baseAmount() {return player.points}, // Get the current amount of baseResource
     row: "side",
     tooltip() { // Optional, tooltip displays when the layer is locked
         return ("Blackhole")
     },
+    hotkeys: [
+        {key: "u", description: "u: Reset for universes", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
     milestones: {
         0: {
             requirementDescription: "the end?",
@@ -351,25 +355,6 @@ addLayer("b", {
             done() { return player[this.layer].points.gte(1) }
         }
     },
-    doReset(){
-        layerDataReset("a")
-        layerDataReset("p")
-        layerDataReset("pl")
-        layerDataReset("c")
-        layerDataReset("cs")
-        /*
-          that giant if does 2 things
-          first it gets the resetting layer's row and makes sure
-          it's higher than the current layer's row
-      
-          second it gets the resetting layer's row again
-          and checks if it's a side layer
-          if either of those are true then it returns
-          nothing which ends the function
-      
-          the other line resets the layer
-        */
-      },
       
 },
 )
