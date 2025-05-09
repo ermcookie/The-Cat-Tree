@@ -84,7 +84,7 @@ addLayer("p", {
     hotkeys: [
         {key: "e", description: "E: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true},
+    layerShown(){return hasAchievement("ac",24)},
     branches:["p","a"],
     passiveGeneration(){return hasUpgrade("a",11)},
     upgrades:{
@@ -142,7 +142,7 @@ addLayer("a", {
     hotkeys: [
         {key: "a", description: "A: Reset for Ascended tuna", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true},
+    layerShown(){return hasAchievement("ac",22)},
     branches:["a","cs","pl"],
     upgrades:{
         11:{
@@ -190,7 +190,7 @@ addLayer("cs", {
     hotkeys: [
         {key: "s", description: "S: Reset for stars", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true},
+    layerShown(){return hasAchievement("ac",23)},
     upgrades:{
         11:{
             title:"aries",
@@ -240,7 +240,7 @@ addLayer("cs", {
             title:"pisces",
             cost:new Decimal(12),
         },
-    }
+    },
 })
 addLayer("pl", {
     name: "planets", // This is optional, only used in a few places, If absent it just uses the layer id.
@@ -268,7 +268,7 @@ addLayer("pl", {
     hotkeys: [
         {key: "p", description: "p: Reset for planets", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true},
+    layerShown(){return hasAchievement("ac",31)},
     upgrades:{
         11:{
             title:"mercury",
@@ -312,3 +312,620 @@ addLayer("pl", {
         },
     }
 })
+addLayer("ac", {
+    startData() { return {
+        unlocked: true,
+        points: new Decimal(0),
+    }},
+    color: "yellow",
+    resource: "achievements", 
+    row: "side",
+    tooltip() { // Optional, tooltip displays when the layer is locked
+        return ("Achievements")
+    },
+    achievementPopups: true,
+    achievements: {
+        11: {
+            name: "what da tuna",
+            done() {return (player["c"].points.neq(0) || hasAchievement("ac",11))}, // This one is a freebie
+            doneTooltip: "You did it!", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        12: {
+            name: "you know what that means",
+            done() {return (player.points.greaterThan(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        13: {
+            name: "yippee",
+            done() {return (player["p"].points.equals(1) || hasAchievement("ac",13))}, // This one is a freebie
+            doneTooltip: "yay!!", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        14: {
+            name: "nice",
+            done() {return (player["c"].points.equals(69) || hasAchievement("ac",14))}, // This one is a freebie
+            doneTooltip: ";)", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        21: {
+            name: "h4xx0r",
+            done() {return (player.points.greaterThanOrEqualTo(1337) || hasAchievement("ac",21))}, // This one is a freebie
+            doneTooltip: "im in", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        22: {
+            name: "the honoured one",
+            done() {return (hasUpgrade("p",13) || hasAchievement("ac",22))}, // This one is a freebie
+            doneTooltip: "go/jo", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        23: {
+            name: "the sun is a deadly laser!",
+            done() {return (hasUpgrade("pl",24) || hasAchievement("ac",23))}, // This one is a freebie
+            doneTooltip: ":fire:", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        24: {
+            name: "O-O",
+            done() {return (player["c"].points.equals(50) || hasAchievement("ac",24))}, // This one is a freebie
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+            doneTooltip: "BOTTOM TEXT", // Showed when the achievement is completed
+        },
+        31: {
+            name: "planetarium",
+            done() {return (hasUpgrade("a",13) || hasAchievement("ac",12))}, // This one is a freebie
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+       /* 32: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        33: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        34: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        41: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        42: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        43: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        44: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        51: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        52: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        53: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        54: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        61: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        62: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        63: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        64: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        71: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        72: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        73: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        74: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        81: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        82: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        83: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        84: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        91: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        92: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        93: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        94: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        101: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        102: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        103: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        104: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        111: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        112: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        113: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        114: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        121: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        122: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        123: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        124: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        131: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        132: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        133: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        134: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        141: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        142: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        143: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        144: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        151: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        152: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        153: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        154: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        161: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        162: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        163: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        164: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        171: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        172: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        173: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        174: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        181: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        182: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        183: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        184: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        191: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        192: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        193: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        194: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        201: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        202: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        203: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        204: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        211: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        212: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        213: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        214: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        221: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        222: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        223: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        224: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        231: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        232: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        233: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        234: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        241: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        242: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        243: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        244: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        251: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        252: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        253: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        },
+        254: {
+            name: "you know what that means",
+            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "fish", // Showed when the achievement is completed
+            onComplete(){player["ac"].points = player["ac"].points.add(1)},
+        }, */
+        
+    },
+   
+},
+)
