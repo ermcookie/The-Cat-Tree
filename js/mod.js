@@ -12,17 +12,21 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.2",
-	name: "meow :3",
+	num: "0.3",
+	name: "mao :3",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.1</h3><br>
 		- Added 4 layers.<br>
 		- Added upgrades.
-	<h3>v0.1</h3><br>
+	<h3>v0.2</h3><br>
 		- Added 1 layer.<br>
-		- Added upgrades.`
+		- Added upgrades.
+	<h3>v0.3</h3><br>
+        - Added 10 achievements
+ 		- Added blackhole reset.<br>
+		- Added 1 blackhole milestone.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -61,8 +65,7 @@ function getPointGen() {
 	if (hasUpgrade("cs",32)) gain = gain.pow(1.5)
 	if (hasUpgrade("cs",33)) gain = gain.pow(1.5)
 	if (hasUpgrade("cs",34)) gain = gain.pow(1.5)
-		
-
+	if (hasMilestone("b",0)) gain = gain.times(2)
 	return gain
 }
 

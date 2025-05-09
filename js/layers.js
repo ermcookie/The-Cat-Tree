@@ -194,51 +194,51 @@ addLayer("cs", {
     upgrades:{
         11:{
             title:"aries",
-            cost: new Decimal(1),
+            cost: new Decimal(10),
         },
         12:{
             title:"taurus",
-            cost:new Decimal(2),
+            cost:new Decimal(20),
         },
         13:{
             title:"gemini",
-            cost:new Decimal(3),
+            cost:new Decimal(30),
         },
         14:{
             title:"cancer",
-            cost:new Decimal(4),
+            cost:new Decimal(40),
         },
         21:{
             title:"leo",
-            cost:new Decimal(5),
+            cost:new Decimal(50),
         },
         22:{
             title:"virgo",
-            cost:new Decimal(6),
+            cost:new Decimal(60),
         },
         23:{
             title:"libra",
-            cost:new Decimal(7),
+            cost:new Decimal(70),
         },
         24:{
             title:"scorpio",
-            cost:new Decimal(8),
+            cost:new Decimal(80),
         },
         31:{
             title:"sagittarius",
-            cost:new Decimal(9),
+            cost:new Decimal(90),
         },
         32:{
             title:"capricorn",
-            cost:new Decimal(10),
+            cost:new Decimal(100),
             },
         33:{
             title:"aquarius",
-            cost:new Decimal(11),
+            cost:new Decimal(110),
         },
         34:{
             title:"pisces",
-            cost:new Decimal(12),
+            cost:new Decimal(120),
         },
     },
 })
@@ -312,6 +312,39 @@ addLayer("pl", {
         },
     }
 })
+
+addLayer("b", {
+    startData() { return {
+        unlocked: true,
+        points: new Decimal(0),
+    }},
+    color: "grey",
+    resource: "universes", 
+    baseResource: "fish",
+    requires: new Decimal(1e100),
+    type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 2, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    baseAmount() {return player.points}, // Get the current amount of baseResource
+    row: "side",
+    tooltip() { // Optional, tooltip displays when the layer is locked
+        return ("Blackhole")
+    },
+    milestones: {
+        0: {
+            requirementDescription: "the end?",
+            effectDescription: "2x point gain",
+            done() { return player[this.layer].points.gte(1) }
+        }
+    }
+},
+)
 addLayer("ac", {
     startData() { return {
         unlocked: true,
@@ -378,13 +411,13 @@ addLayer("ac", {
             done() {return (hasUpgrade("a",13) || hasAchievement("ac",12))}, // This one is a freebie
             onComplete(){player["ac"].points = player["ac"].points.add(1)},
         },
-       /* 32: {
-            name: "you know what that means",
-            done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
-            doneTooltip: "fish", // Showed when the achievement is completed
+        32: {
+            name: "NOT",
+            done() {return (player["b"].points.gte(1) || hasAchievement("ac",12))}, // This one is a freebie
+            doneTooltip: "hehe", // Showed when the achievement is completed
             onComplete(){player["ac"].points = player["ac"].points.add(1)},
         },
-        33: {
+      /*  33: {
             name: "you know what that means",
             done() {return (player.points.equals(1000) || hasAchievement("ac",12))}, // This one is a freebie
             doneTooltip: "fish", // Showed when the achievement is completed
