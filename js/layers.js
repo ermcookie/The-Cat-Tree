@@ -75,6 +75,7 @@ addLayer("p", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if (hasUpgrade("a",13)) mult = mult.times(player["c"].points).div(100)
+        if (hasMilestone("b",1)) mult = mult.times(2)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -84,7 +85,7 @@ addLayer("p", {
     hotkeys: [
         {key: "e", description: "E: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return hasAchievement("ac",24)},
+    layerShown(){return true},
     branches:["p","a"],
     passiveGeneration(){return hasUpgrade("a",11)},
     upgrades:{
@@ -117,7 +118,7 @@ addLayer("a", {
         unlocked: true,
 		points: new Decimal(0),
     }},
-    color: "#00003B",
+    color: "#122331",
     requires: new Decimal(5), // Can be a function that takes requirement increases into account
     resource: "ascended tuna", // Name of prestige currency
     baseResource: "prestige points", // Name of resource prestige is based on
@@ -134,6 +135,7 @@ addLayer("a", {
         if(hasUpgrade("pl",22)) mult = mult.times(4)
         if(hasUpgrade("pl",23)) mult = mult.times(4.5)
         if(hasUpgrade("pl",24)) mult = mult.times(5)
+        if(hasMilestone("b",2)) mult = mult.times(5)
     
         return mult
     },
@@ -149,18 +151,18 @@ addLayer("a", {
     upgrades:{
         11:{
             title:"midas cat",
-            description:"yummy golden tuna",
+            description:"yummy golden tuna<br>100% prestige points generation",
             cost: new Decimal(1),
         },
         12:{
             title:"antimatter toys",
-            description:"antimatter cats love them",
+            description:"antimatter cats love them<br>^1.2 fish gain",
             cost:new Decimal(2),
             unlocked(){return hasUpgrade("a",11)}
         },
         13:{
             title:"ascended robots",
-            description:"beep boop!",
+            description:"beep boop!<br>money^2/500k",
             cost:new Decimal(3),
             unlocked(){return hasUpgrade("a",12)}
         }
@@ -175,7 +177,7 @@ addLayer("cs", {
 		points: new Decimal(0),
     }},
     color: "#0000FF",
-    requires: new Decimal(5), // Can be a function that takes requirement increases into account
+    requires: new Decimal(50), // Can be a function that takes requirement increases into account
     resource: "stars", // Name of prestige currency
     baseResource: "ascended tuna", // Name of resource prestige is based on
     baseAmount() {return player["a"].points}, // Get the current amount of baseResource
@@ -207,46 +209,57 @@ addLayer("cs", {
         12:{
             title:"taurus",
             cost:new Decimal(20),
+            unlocked(){return hasUpgrade(this.layer,11)}
         },
         13:{
             title:"gemini",
             cost:new Decimal(30),
+            unlocked(){return hasUpgrade(this.layer,12 )}
         },
         14:{
             title:"cancer",
             cost:new Decimal(40),
+            unlocked(){return hasUpgrade(this.layer,13)}
         },
         21:{
             title:"leo",
             cost:new Decimal(50),
+            unlocked(){return hasUpgrade(this.layer,14)}            
         },
         22:{
             title:"virgo",
             cost:new Decimal(60),
+            unlocked(){return hasUpgrade(this.layer,21)}            
         },
         23:{
             title:"libra",
             cost:new Decimal(70),
+            unlocked(){return hasUpgrade(this.layer,22)}            
         },
         24:{
             title:"scorpio",
             cost:new Decimal(80),
+            unlocked(){return hasUpgrade(this.layer,23)}            
         },
         31:{
             title:"sagittarius",
             cost:new Decimal(90),
+            unlocked(){return hasUpgrade(this.layer,24)}            
         },
         32:{
             title:"capricorn",
             cost:new Decimal(100),
+            unlocked(){return hasUpgrade(this.layer,31)}            
             },
         33:{
             title:"aquarius",
             cost:new Decimal(110),
+            unlocked(){return hasUpgrade(this.layer,32)}            
         },
         34:{
             title:"pisces",
             cost:new Decimal(120),
+            unlocked(){return hasUpgrade(this.layer,33)}            
         },
     },
 })
@@ -258,7 +271,7 @@ addLayer("pl", {
         unlocked: true,
 		points: new Decimal(0),
     }},
-    color: "#00003B",
+    color: "#002B9B",
     requires: new Decimal(5), // Can be a function that takes requirement increases into account
     resource: "planets", // Name of prestige currency
     baseResource: "ascended tuna", // Name of resource prestige is based on
@@ -341,10 +354,8 @@ addLayer("b", {
     },
 
     baseAmount() {return player.points}, // Get the current amount of baseResource
-    row: "side",
-    tooltip() { // Optional, tooltip displays when the layer is locked
-        return ("Blackhole")
-    },
+    row: "4",
+    layerShown(){return true},
     hotkeys: [
         {key: "u", description: "u: Reset for universes", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
@@ -353,6 +364,16 @@ addLayer("b", {
             requirementDescription: "the end?",
             effectDescription: "2x point gain",
             done() { return player[this.layer].points.gte(1) }
+        },
+                1: {
+            requirementDescription: "heaven's door",
+            effectDescription: "2x prestige gain",
+            done() { return player[this.layer].points.gte(5) }
+        },
+                2: {
+            requirementDescription: "s.t.a.r.s",
+            effectDescription: "2x ascended tuna gain",
+            done() { return player[this.layer].points.gte(5) }
         }
     },
       
@@ -415,18 +436,18 @@ addLayer("ac", {
         },
         24: {
             name: "O-O",
-            done() {return (player["c"].points.equals(50) || hasAchievement("ac",24))}, // This one is a freebie
+            done() {return (player["c"].points.greaterThanOrEqualTo(50) || hasAchievement("ac",24))}, // This one is a freebie
             onComplete(){player["ac"].points = player["ac"].points.add(1)},
             doneTooltip: "BOTTOM TEXT", // Showed when the achievement is completed
         },
         31: {
             name: "planetarium",
-            done() {return (hasUpgrade("a",13) || hasAchievement("ac",12))}, // This one is a freebie
+            done() {return (hasUpgrade("a",13) || hasAchievement("ac",31))}, // This one is a freebie
             onComplete(){player["ac"].points = player["ac"].points.add(1)},
         },
         32: {
             name: "NOT",
-            done() {return (player["b"].points.gte(1) || hasAchievement("ac",12))}, // This one is a freebie
+            done() {return (player["b"].points.gte(1) || hasAchievement("ac",32))}, // This one is a freebie
             doneTooltip: "hehe", // Showed when the achievement is completed
             onComplete(){player["ac"].points = player["ac"].points.add(1)},
         },
