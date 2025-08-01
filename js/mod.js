@@ -6,7 +6,7 @@ let modInfo = {
 
 	discordName: "ermcookie's stuff",
 	discordLink: "https://discord.gg/PNuyTFGpzv",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
+	initialStartPoints: new Decimal (1), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 

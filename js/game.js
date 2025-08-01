@@ -345,14 +345,14 @@ function gameLoop(diff) {
 	addTime(diff)
 	player.points = player.points.add(tmp.pointGen.times(diff)).max(0)
 
-	for (let x = 0; x <= maxRow; x++){
-		for (item in TREE_LAYERS[x]) {
-			let layer = TREE_LAYERS[x][item]
-			player[layer].resetTime += diff
-			if (tmp[layer].passiveGeneration) generatePoints(layer, diff*tmp[layer].passiveGeneration);
-			if (layers[layer].update) layers[layer].update(diff);
-		}
-	}
+for (let x = 0; x <= 10; x++){
+        for (item in ROW_LAYERS[x]) {
+            let layer = ROW_LAYERS[x][item]
+            player[layer].resetTime += diff
+            if (tmp[layer].passiveGeneration) generatePoints(layer, diff*tmp[layer].passiveGeneration);
+            if (layers[layer].update) layers[layer].update(diff);
+        }
+    } 
 
 	for (row in OTHER_LAYERS){
 		for (item in OTHER_LAYERS[row]) {
@@ -405,7 +405,7 @@ var interval = setInterval(function() {
 	if (tmp.gameEnded&&!player.keepGoing) return;
 	ticking = true
 	let now = Date.now()
-	let diff = (now - player.time) / 1e3
+	let diff = (now - player.time) / 1000
 	let trueDiff = diff
 	if (player.offTime !== undefined) {
 		if (player.offTime.remain > modInfo.offlineLimit * 3600) player.offTime.remain = modInfo.offlineLimit * 3600

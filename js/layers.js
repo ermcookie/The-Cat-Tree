@@ -12,7 +12,7 @@ addLayer("c", {
     baseResource: "fish", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.5, // Prestige currency exponent
+    exponent: 0.5, // Prestige currency exponent   
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if (hasUpgrade("p",12)) mult = mult.times(2)
@@ -36,7 +36,7 @@ addLayer("c", {
     ],
     layerShown(){return true},
     branches:["c","p"],
-    passiveGeneration(){return hasUpgrade("p",11)},
+    passiveGeneration(){return true},
     upgrades:{
         11:{
             title:"cat food",
@@ -55,7 +55,7 @@ addLayer("c", {
             cost:new Decimal(25),
             unlocked(){return hasUpgrade("c",12)}
         },
-    }
+    },
 })
 addLayer("p", {
     name: "prestige", // This is optional, only used in a few places, If absent it just uses the layer id.
@@ -71,7 +71,7 @@ addLayer("p", {
     baseResource: "money", // Name of resource prestige is based on
     baseAmount() {return player["c"].points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.5, // Prestige currency exponent
+    exponent: 0.5, // Prestige currency exponent  
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if (hasUpgrade("a",13)) mult = mult.times(player["c"].points).div(100)
@@ -87,7 +87,7 @@ addLayer("p", {
     ],
     layerShown(){return true},
     branches:["p","a"],
-    passiveGeneration(){return hasUpgrade("a",11)},
+    passiveGeneration(){return true},
     upgrades:{
         11:{
             title:"premium cat food",
